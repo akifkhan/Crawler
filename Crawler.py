@@ -5,9 +5,11 @@ A simple crawler for Bloomberg.com that crawls and stores all news articles in M
 """
 import links
 
-url="http://www.bloomberg.com/archive/news/2014-03-01/"
+url="http://www.bloomberg.com/archive/news/2014-02-01/"
 
-links = links.get_links(url)
-total_links= len(links)
+link1 = links.get_links(url)
+total_links= len(link1)
+print total_links
 for index in range(0,total_links):
-	get_articles(links(index))
+	print link1[index]
+	links.get_articles(link1[index])

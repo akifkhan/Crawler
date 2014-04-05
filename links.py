@@ -7,11 +7,11 @@ A simple crawler for Bloomberg.com that crawls and stores all news articles in M
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
 
-url="http://www.bloomberg.com/news/2014-04-05/bank-of-england-rates-to-australian-unemployment-global-economy.html"
+url="http://www.bloomberg.com/archive/news/2014-02-01/philippine-storm-batters-areas-still-reeling-from-haiyan-quake.html"
 
 def get_links(url):
 	
-	BASE_URL="http://www.bloomberg.com/archive"
+	BASE_URL="http://www.bloomberg.com"
 
 	html = urlopen(url).read()
 	soup = BeautifulSoup(html, "lxml")
@@ -24,24 +24,34 @@ def get_articles(url):
 
 	html = urlopen(url).read()
 	soup = BeautifulSoup(html, "lxml")
-	heading = soup.find( "h1", "article_title buffer").string
-	author = soup.find( "span", "author").string
-	timestamp = soup.find( "span","date").string
-	content = soup.find('div',{'itemprop':'articleBody'}).text
-	content1 = soup.find('meta',{'name':'title'})
 
-	category = soup.findAll(attrs={"name":"category"}) 
-	category = category[0]['content']
+#EXTRACTING DATA FROM HTML TAGS
 
-	print category
-
+	heading = soup.find( "h1", "article_title buffer").string 		# Heading of the Article
+	author = soup.find( "span", "author").string 					# Author/Writer of the Article
+	timestamp = soup.find( "span","date").string 					# Time stamp of article
+	content = soup.find('div',{'itemprop':'articleBody'}).text 		# The Content of the Article
 	
 
-	#print heading, author, timestamp, content1
+#EXTRACTING THE DATA FROM META TAGS
+#SOME DATA HAVE BEEN EXTRACTED TWICE FROM META TAGS
 
 
-get_articles(url)
+	category = soup.findAll(attrs={"name":"category"}) 		#category of Article on the basis of which it has been sorted on the website
+	category = category[0]['content']
+
+	
+	description = soup.findAll(attrs={"name":"description"}) # Brief Description of the Article
+	description = description[0]['content']
+
+	
+	pubdate = soup.findAll(attrs={"name":"pubdate"}) 		# Publishing Time and Date of the Article
+	pubdate = pubdate[0]['content']
+	
+
+	print category, description, pubdate
 
 
+#get_articles(url)
 
 __name__ == "__main__"
