@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 from urllib2 import urlopen
 from json import JSONEncoder
 
-url="http://www.bloomberg.com/archive/news/2014-02-01/philippine-storm-batters-areas-still-reeling-from-haiyan-quake.html"
 
 def get_links(url):
 	

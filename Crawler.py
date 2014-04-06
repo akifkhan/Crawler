@@ -4,6 +4,7 @@ A simple crawler for Bloomberg.com that crawls and stores all news articles in M
 
 """
 import links
+import DB_connect
 from datetime import date, timedelta
 from json import JSONDecoder
 
@@ -28,7 +29,6 @@ while(Days < 2920):								# 365*8 = 2920 as the website got news only till 2006
 	for index in range(0,total_links):	
 		print list_links[index]
 		data = links.get_articles(list_links[index])
-		print data
 		data = JSONDecoder().decode(data)
-		print data
+		lol=DB_connect.mongo_insert(data)
 	Days = Days+1
