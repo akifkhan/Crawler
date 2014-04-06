@@ -6,6 +6,7 @@ A simple crawler for Bloomberg.com that crawls and stores all news articles in M
 
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
+from json import JSONEncoder
 
 url="http://www.bloomberg.com/archive/news/2014-02-01/philippine-storm-batters-areas-still-reeling-from-haiyan-quake.html"
 
@@ -49,9 +50,17 @@ def get_articles(url):
 	pubdate = pubdate[0]['content']
 	
 
-	print category, description, pubdate
 
-
-#get_articles(url)
+	jsonString = JSONEncoder().encode( 
+			{
+			"heading": heading,
+			"category": category,
+			"author": author,
+			"description": description,
+			"pubdate": pubdate,
+			"content": content
+			} )
+	return jsonString
+	
 
 __name__ == "__main__"
